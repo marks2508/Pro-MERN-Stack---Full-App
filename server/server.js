@@ -2,6 +2,7 @@ import SourceMapSupport from 'source-map-support';
 SourceMapSupport.install();
 import 'babel-polyfill';
 
+import path from 'path';
 import express from 'express';
 import bodyParser from 'body-parser';
 import { MongoClient } from 'mongodb';
@@ -16,6 +17,7 @@ let db;
 app.get('/api/issues', (req, res) => {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
+
   db.collection('issues').find(filter).toArray()
   .then(issues => {
     const metadata = { total_count: issues.length };
@@ -51,6 +53,10 @@ app.post('/api/issues', (req, res) => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve('static/index.html'));
 });
 
 MongoClient.connect('mongodb://localhost/issuetracker').then(connection => {

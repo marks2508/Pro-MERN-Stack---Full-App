@@ -6,6 +6,10 @@ var _sourceMapSupport2 = _interopRequireDefault(_sourceMapSupport);
 
 require('babel-polyfill');
 
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
+
 var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
@@ -34,6 +38,7 @@ let db;
 app.get('/api/issues', (req, res) => {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
+
   db.collection('issues').find(filter).toArray().then(issues => {
     const metadata = { total_count: issues.length };
     res.json({ _metadata: metadata, records: issues });
@@ -62,6 +67,10 @@ app.post('/api/issues', (req, res) => {
     console.log(error);
     res.status(500).json({ message: `Internal Server Error: ${error}` });
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(_path2.default.resolve('static/index.html'));
 });
 
 _mongodb.MongoClient.connect('mongodb://localhost/issuetracker').then(connection => {
