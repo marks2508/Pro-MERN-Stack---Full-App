@@ -1,5 +1,3 @@
-'use strict';
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -50,7 +48,7 @@ function validateIssue(issue) {
 
 exports.default = {
   validateIssue: validateIssue,
-  cleanedupIssue: cleanedupIssue,
+  cleanupIssue: cleanupIssue,
   convertIssue: convertIssue,
 };
 //# sourceMappingURL=issue.js.map

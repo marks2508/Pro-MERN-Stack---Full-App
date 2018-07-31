@@ -1,4 +1,3 @@
-
 const validIssueStatus = {
   New: true,
   Open: true,
